@@ -23,17 +23,17 @@
           </div>
           <div class="col-lg-6 text-center mt-2" v-if="mil && realTime">
             <i class="pi pi-map" style="font-size: 13em;"></i><br/>
-           <div class="row mt-3 font-weight-bold">
-             <div class="col-1 col-lg-3">
+            <div class="row mt-3 font-weight-bold">
+              <div class="col-1 col-lg-3">
 
-             </div>
-             <div class="col-5 col-lg-3">
-               <span><i class="pi pi-car mr-2" style="font-size: 2em;"></i></span>{{ mil }}<br/>
-             </div>
-             <div class="col-5 col-lg-3">
-               <span><i class="pi pi-map-marker mr-2" style="font-size: 2em;"></i></span>{{ realTime }}<br/>
-             </div>
-           </div>
+              </div>
+              <div class="col-5 col-lg-3">
+                <span><i class="pi pi-car mr-2" style="font-size: 2em;"></i></span>{{ mil }}<br/>
+              </div>
+              <div class="col-5 col-lg-3">
+                <span><i class="pi pi-map-marker mr-2" style="font-size: 2em;"></i></span>{{ realTime }}<br/>
+              </div>
+            </div>
           </div>
           <div class="col-lg-6" v-else>
             <div v-if="animation == false">
@@ -103,7 +103,10 @@ export default {
         this.formMap.msgBeginning = ''
         this.formMap.msgFinish = ''
         let data = this;
-        axios.get('http://www.mapquestapi.com/directions/v2/route?key=DktL8V7kC5Jx6fPusAfTLLgd5nmZOzSL&from=' + this.formMap.beginning + '&to=' + this.formMap.finish).then(function (resp) {
+        const headers = {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        };
+        axios.get('https://www.mapquestapi.com/directions/v2/route?key=DktL8V7kC5Jx6fPusAfTLLgd5nmZOzSL&from=' + this.formMap.beginning + '&to=' + this.formMap.finish,{headers},{ crossdomain: true }).then(function (resp) {
           console.log(resp.data.route)
           data.mil = resp.data.route.distance.toFixed() + ' ' + 'mil'
           var minute = resp.data.route.realTime / 60
